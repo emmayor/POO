@@ -69,7 +69,6 @@ public class Tigre {
     }
 
     public void imprimirDatos() {
-        System.out.println("Pruebita de push 3");
         System.out.println("DATOS DEL TIGRE:");
         System.out.println("Lugar: "+this.getOrigen());
         System.out.println("Destreza: "+this.getDestreza());
