@@ -1,0 +1,222 @@
+A:
+
+Alquiler
+Vehiculo
+	Auto
+	Minibus
+	Furgoneta
+	Camion
+
+B:
+
+Version 1.1: No existe clase Alquiler. La clase Vehiculo engloba los elementos de los vehículos y los datos de alquiler. Es la forma más directa de interpretar el enunciado
+
+- El precio es propio al alquiler, no al vehículo. Poca distinción entre conceptos
+- Preguntarle el precio de un Alquiler a un Vehículo es raro 
+- La variable cantDias no se usa en todas las subclases. Posible optimización.
+
+
+------------------------------|
+Vehiculo:
+	String patente
+	String tipo
+	int cantDias
+------------------------------
+	int getPrecioBase()
+	int getPrecioAdicional()
+	int getPrecioTotal()
+------------------------------
+
+------------------------------
+Personas extends Vehiculo:
+	int cantPlazas
+------------------------------
+
+------------------------------
+Carga extends Vehiculo:
+	int pesoMaximoAutorizado
+------------------------------
+
+------------------------------
+Auto extends Personas:
+	int precioAdicional()*
+------------------------------
+
+------------------------------
+Minibus extends Personas:
+	int precioAdicional()*
+------------------------------
+
+------------------------------
+Furgoneta extends Carga:
+	int precioAdicional()*
+------------------------------
+
+------------------------------
+Camion extends Carga:
+	int precioAdicional()*
+------------------------------
+
+Versión 1.2: 
++ La clase Vehículo maneja todo. Tiene un alquiler asociado
+- Preguntarle el precio del Alquiler al Vehículo es raro 
+- La variable cantDias no se usa en todas las subclases. Posible optimización.
+
+------------------------------
+Alquiler:
+	int cantDias
+------------------------------
+	int getPrecioBase()
+------------------------------
+
+
+------------------------------
+Vehiculo:
+	String patente
+	String tipo
+	Alquiler alquiler
+	int getPrecioAlquiler
+	int getPrecioAdicional
+------------------------------
+
+------------------------------
+Personas extends Vehiculo:
+	int cantDias
+	int cantPlazas
+------------------------------
+
+------------------------------
+Carga extends Vehiculo:
+	int pesoMaximoAutorizado
+------------------------------
+
+------------------------------
+Auto extends Personas:
+	int precioAlquiler()*
+------------------------------
+
+------------------------------
+Minibus extends Personas:
+	int precioAlquiler()*
+------------------------------
+
+------------------------------
+Furgoneta extends Carga:
+	int precioAlquiler()*
+------------------------------
+
+------------------------------
+Camion extends Carga:
+	int precioAlquiler()*
+
+
+Version 2: Se crea un árbol de herencia para los Alquileres. En éstos se manejará todo lo relacionado a ellos. Quedaría de la siguiente manera
+
+Alquiler:
+	AlquilerAuto
+		AlquilerMinibus
+	AlquilerCarga
+		AlquilerCamion
+		AlquilerFurgoneta
+
+
+La clase Vehículo sólo existe para poder agregar más caracteristicas propias de los vehículos dependiendo de los requerimientos a futuro (así como la patente, se puede agregar el nivel de combustible, ultima fecha de service, daños, etc)
+
+Logramos separar los elementos propios al acuerdo entre el cliente y la empresa de los que corresponden al vehículo en sí.
+
+El cálculo del alquiler, hecho por el método getPrecioTotal() se hace en las subclases, el cual es el resultado de la suma entre:
+	* getPrecioBase(), que devuelve el precio común a todos los vehículos
+	* getPrecio<Categoría>, que devuelve el precio común a la categoría (que son en éste caso Carga y Personas)
+	* getPrecio<tipoVehiculo>, que devuelve el componente del precio único a cada vehículo.
+
+Esto nos dá la flexibilidad de agregar (o no) precios dependiendo del alquiler en si, del tipo de carga del vehículo, o del vehículo en sí, dependiendo el caso. Por ejemplo, en la categoría Personas, el cálculo del alquiler de Autos y minibuses es de $100 x plaza x día. La subclase Auto no tiene un calculo adicional, por lo que su getPrecioTotal() devuelve directamente getPrecio<Categoría>. En cambio, en el caso de los minibuses se le agrega la cantidad de $120 x plaza.
+
+
++ Abstracción más clara
++ Las operaciones intermedias de los cálculos están más modularizadas
+- precioMaximoAutorizado es algo propio del vehículo o del alquiler? 
+
+------------------------------
+Alquiler:
+	int cantDias
+	Vehiculo vehiculo
+------------------------------
+	int getPrecioBase()
+	int getPrecioTotal()
+------------------------------
+
+	------------------------------
+	AlquilerPersonas extends Alquiler:
+		int cantPlazas
+	------------------------------
+		int getPrecioPersonas()
+	------------------------------
+
+		------------------------------
+		AlquilerAuto extends AlquilerPersonas:
+			int getPrecioAuto()
+			int getPrecioTotal()*
+		------------------------------
+
+		------------------------------
+		AlquilerMinibus extends AlquilerPersonas:
+			int getPrecioMinibus()
+			int getPrecioTotal()*
+		------------------------------
+
+
+	------------------------------
+	AlquilerCarga extends Alquiler:
+		int pesoMaximoAutorizado
+	------------------------------
+		int getPrecioCarga()
+	------------------------------
+
+		------------------------------
+		AlquilerCamion extends AlquilerCarga:
+			int getPrecioCamion()
+			int getPrecioTotal()*
+		------------------------------
+
+		------------------------------
+		AlquilerFurgo extends AlquilerCarga:
+			int getPrecioFurgo()
+			int getPrecioTotal()*
+		------------------------------
+
+------------------------------
+Vehiculo:
+	String tipo
+	String patente
+------------------------------
+	String getTipo()
+	String getPatente()
+
+
+Ejemplo de instancia de clase AlquilerAuto:
+
+------------------------------
+AlquilerAuto:
+	int cantDias
+	int cantPlazas
+	Vehiculo vehiculo
+------------------------------
+	int getPrecioBase()
+	int getPrecioPersonas()
+	int getPrecioAuto()
+	int getPrecioTotal()*
+------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+	

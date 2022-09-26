@@ -1,0 +1,28 @@
+Estamos buscando desarrollar un programa que nos permita calcular los precios de alquiler de autos de nuestra empresa. Cada vehículo se identifica unívocamente por medio de su patente.
+
+La empresa alquila distintos tipos de vehículos, tanto para transporte de personas como para transporte de carga. Actualmente nuestra flota esta compuesta por Autos, Minibuses, Furgonetas de carga y Camiones. El precio de alquiler de cualquier vehículo tiene un componente base que depende de los días de alquiler a razón de $2000 x día. En caso de alquiler de un Auto, al precio base se le suma la cantidad de $100 por plaza y día. El precio de alquiler de los Minibuses es igual que el de los Autos, salvo que se le agrega una cantidad de $120 por plaza independientemente de los días de alquiler. 
+
+El precio de los vehículos de carga es el precio base más $800 por PMA (Peso Máximo Autorizado en Toneladas). Además en el caso de los camiones al precio base se suma un fijo de $1600 independientemente de los días de alquiler.	
+
+Vehículos
+	patente
+	precioBase = cantDias * 2000
+
+Auto
+	precioAlquiler = (100 * cantPlazas * cantDias)
+
+Minibus
+	precioAlquiler = (120 * cantPlazas)
+
+Furgoneta
+	precioAlquiler = (800 * pesoMaximoAutorizado)
+
+Camion
+	precioAlquiler = (1600 + 800 * pesoMaximoAutorizado)
+
+
+Alquiler
+	cantDías
+	precioBase = cantDias * 2000
+	Vehículo = {Auto, Minibus, Furgoneta, Camion}
+	precioTotal = precioBase + vehiculo.precioAlquiler()
