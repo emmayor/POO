@@ -129,7 +129,7 @@ El cálculo del alquiler, hecho por el método getPrecioTotal() se hace en las s
 	* getPrecio<Categoría>, que devuelve el precio común a la categoría (que son en éste caso Carga y Personas)
 	* getPrecio<tipoVehiculo>, que devuelve el componente del precio único a cada vehículo.
 
-Esto nos dá la flexibilidad de agregar (o no) precios dependiendo del alquiler en si, del tipo de carga del vehículo, o del vehículo en sí, dependiendo el caso. Por ejemplo, en la categoría Personas, el cálculo del alquiler de Autos y minibuses es de $100 x plaza x día. La subclase Auto no tiene un calculo adicional, por lo que su getPrecioTotal() devuelve directamente getPrecio<Categoría>. En cambio, en el caso de los minibuses se le agrega la cantidad de $120 x plaza.
+Esto nos dá la flexibilidad de agregar (o no) precios dependiendo del alquiler en si, del tipo de carga del vehículo, o del vehículo, dependiendo el caso. Por ejemplo, en la categoría Personas, el cálculo del alquiler de Autos y minibuses es de $100 x plaza x día. La subclase Auto no tiene un calculo adicional, por lo que su getPrecioTotal() devuelve directamente getPrecio<Categoría>. En cambio, en el caso de los minibuses se le agrega la cantidad de $120 x plaza.
 
 
 + Abstracción más clara
