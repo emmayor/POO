@@ -1,5 +1,5 @@
 public class Tigre {
-    private String lugar;
+    private String origen;
     private String destreza;
     private String peligrosidad;
     private String energia;
@@ -10,8 +10,8 @@ public class Tigre {
         System.out.println("Se ha creado un tigre!");
     }
 
-    public Tigre(String nLugar, String nDestreza, String nPeligrosidad, String nEnergia, String nActitud, String nAspecto) {
-        this.setLugar(nLugar);
+    public Tigre(String nOrigen, String nDestreza, String nPeligrosidad, String nEnergia, String nActitud, String nAspecto) {
+        this.setOrigen(nOrigen);
         this.setDestreza(nDestreza);
         this.setPeligrosidad(nPeligrosidad);
         this.setEnergia(nEnergia);
@@ -20,8 +20,8 @@ public class Tigre {
         System.out.println("Se ha creado un tigre con argumentos!");
     }
 
-    String getLugar() {
-        return this.lugar;
+    String getOrigen() {
+        return this.origen;
     }
 
     String getDestreza() {
@@ -44,8 +44,8 @@ public class Tigre {
         return this.aspecto;
     }
     
-    void setLugar(String nLugar) {
-        this.lugar = nLugar;
+    void setOrigen(String nOrigen) {
+        this.origen = nOrigen;
     }
 
     void setDestreza(String nDestreza) {
@@ -71,7 +71,7 @@ public class Tigre {
     public void imprimirDatos() {
         System.out.println("Pruebita de push 3");
         System.out.println("DATOS DEL TIGRE:");
-        System.out.println("Lugar: "+this.getLugar());
+        System.out.println("Lugar: "+this.getOrigen());
         System.out.println("Destreza: "+this.getDestreza());
         System.out.println("Peligrosidad: "+this.getPeligrosidad());
         System.out.println("Energía: "+this.getEnergia());
