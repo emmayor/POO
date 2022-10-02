@@ -1,4 +1,5 @@
 public class Tigre {
+    // Atributos
     private String origen;
     private String destreza;
     private String peligrosidad;
@@ -6,8 +7,9 @@ public class Tigre {
     private String actitud;
     private String aspecto;
 
+    // Constructores
     public Tigre() {
-        System.out.println("Se ha creado un tigre!");
+        System.out.println("Se ha creado un tigre!"); // DEBUG
     }
 
     public Tigre(String nOrigen, String nDestreza, String nPeligrosidad, String nEnergia, String nActitud, String nAspecto) {
@@ -17,9 +19,10 @@ public class Tigre {
         this.setEnergia(nEnergia);
         this.setActitud(nActitud);
         this.setAspecto(nAspecto);
-        System.out.println("Se ha creado un tigre con argumentos!");
+        System.out.println("Se ha creado un tigre con argumentos literarios!"); // DEBUG
     }
 
+    // Getters
     String getOrigen() {
         return this.origen;
     }
@@ -44,30 +47,33 @@ public class Tigre {
         return this.aspecto;
     }
     
+    // Setters
     void setOrigen(String nOrigen) {
         this.origen = nOrigen;
     }
 
     void setDestreza(String nDestreza) {
-        this.destreza = nDestreza.toLowerCase();
+        this.destreza = nDestreza;
     }
 
     void setPeligrosidad(String nPeligrosidad) {
-        this.peligrosidad = nPeligrosidad.toLowerCase();
+        this.peligrosidad = nPeligrosidad;
     }
 
     void setEnergia(String nEnergia) {
-        this.energia = nEnergia.toLowerCase();
+        this.energia = nEnergia;
     }
     
     void setActitud(String nActitud) {
-        this.actitud= nActitud.toLowerCase();
+        this.actitud= nActitud;
     }
     
     void setAspecto(String nAspecto) {
-        this.aspecto = nAspecto.toLowerCase();
+        this.aspecto = nAspecto;
     }
 
+
+    // Métodos
     public void imprimirDatos() {
         System.out.println("DATOS DEL TIGRE:");
         System.out.println("Lugar: "+this.getOrigen());

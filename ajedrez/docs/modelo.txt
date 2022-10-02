@@ -19,6 +19,7 @@ Casilleros:
 
 -----------------------------------
 Pieza:
+	nombre: String
 	capDesplazamiento: String
 	conducta: String
 	color: String {Blanco; Negro}
