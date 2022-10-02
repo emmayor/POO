@@ -1,0 +1,15 @@
+public class Tablero {
+    private String material;
+    private Casillero[] casilleros;
+
+    
+    
+    public Tablero(String material, int casilleros_alto,int casilleros_largo) {
+        private int total_casilleros = casilleros_alto*casilleros_largo;
+        this.material = material;
+        for (int i = 0; i < total_casilleros; i++){
+            String posicion = i+"a"
+            Casillero[i] = new Casillero(i,'A'+i)
+        }
+    }
+}
