@@ -6,6 +6,15 @@ public class Pieza {
     private String posicion;
 
     public Pieza(){}
+    
+    public Pieza(String capDesplazamiento, String conducta, String color, String material, String posicion) {
+        this.setCapDesplazamiento(capDesplazamiento);
+        this.setConducta(conducta);
+        this.setColor(color);
+        this.setMaterial(material);
+        this.setPosicion(posicion);
+    }
+    
     public void Mover(){}
 
     public String getCapDesplazamiento(){

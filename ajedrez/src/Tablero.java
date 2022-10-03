@@ -8,7 +8,7 @@ public class Tablero {
             for (int j = 0; j<8; j++){
                 this.casilleros[i][j] = new Casillero();
                 Casillero casilleroActual = this.casilleros[i][j];
-                casilleroActual.setPosicion(Ajedrez.calcularPosicion(i+1,j));
+                casilleroActual.setPosicion(Ajedrez.calcularPosicion(i,j));
                 if ((i % 2) == (j % 2)) {
                     casilleroActual.setColor("Negro");
                 } else {
