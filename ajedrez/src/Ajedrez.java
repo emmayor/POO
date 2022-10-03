@@ -46,9 +46,9 @@ public class Ajedrez {
         return piezas;
     }
 
-    public static String calcularPosicion(int m, int n){
+    public static String calcularPosicion(int i, int j){
         // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
-        return String.valueOf(m+1)+(char)(65+n);
+        return String.valueOf(i+1)+(char)(65+j);
     }
 
     public static void imprimirCasilleros(Tablero tablero){
@@ -107,6 +107,11 @@ public class Ajedrez {
         Pieza[] piezasNegras = instanciarPiezas("Negro", "Madera");
         System.out.println("\nSe han instanciado las piezas negras:");
         imprimirLado(piezasNegras);
+
+        System.out.println("\nMovemos alguna piezas:");
+        piezasNegras[4].Mover();
+        piezasBlancas[12].Mover();
+        piezasNegras[15].Mover();
         
     }
 }   
