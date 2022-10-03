@@ -1,4 +1,4 @@
-public class Pieza {
+public abstract class Pieza {
     private String capDesplazamiento;
     private String conducta;
     private String color;
@@ -15,7 +15,7 @@ public class Pieza {
         this.setPosicion(posicion);
     }
     
-    public void Mover(){}
+    public abstract void Mover();
 
     public String getCapDesplazamiento(){
         return this.capDesplazamiento;
