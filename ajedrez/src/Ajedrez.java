@@ -1,4 +1,9 @@
 public class Ajedrez {
+    
+    public static String calcularPosicion(int i, int j){
+        // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
+        return String.valueOf(i+1)+(char)(65+j);
+    }
     private static Pieza[] instanciarPiezas(String color, String material) {
         // Instancia todas las 16 piezas de un mismo color y material
         int i = 0;
@@ -45,13 +50,7 @@ public class Ajedrez {
 
         return piezas;
     }
-
-    public static String calcularPosicion(int i, int j){
-        // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
-        return String.valueOf(i+1)+(char)(65+j);
-    }
-
-    public static void imprimirCasilleros(Tablero tablero){
+    private static void imprimirCasilleros(Tablero tablero){
         // Imprime el sistema de coordenadas y la disposición de colores de un tablero de 8 x 8
         System.out.println("Tabla de posiciones:\n");
         for (int i = 7; i >= 0; i--){
@@ -74,8 +73,7 @@ public class Ajedrez {
         }
         System.out.println();
     }
-
-    public static void imprimirPieza(Pieza pieza){
+    private static void imprimirPieza(Pieza pieza){
         // Imprime los atributos de una pieza
         String tipo = pieza.getClass().getSimpleName();
         String color = pieza.getColor();
@@ -85,8 +83,7 @@ public class Ajedrez {
         String posicion= pieza.getPosicion();
         System.out.format("%-12s%-12s%-12s%-16s%-12s%-12s\n",tipo,color,material,desplazamiento,conducta,posicion);
     }
-    
-    public static void imprimirLado(Pieza[] piezas){
+    private static void imprimirLado(Pieza[] piezas){
         // Imprime 16 piezas correspondientes a un lado del tablero
         System.out.format("%-12s%-12s%-12s%-16s%-12s%-12s\n","TIPO","COLOR","MATERIAL","DESPLAZAMIENTO","CONDUCTA","POSICIÓN");
         for(int i = 0; i < 16; i++){

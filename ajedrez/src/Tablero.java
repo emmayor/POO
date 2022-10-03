@@ -4,16 +4,16 @@ public class Tablero {
 
     public Tablero(String material){
         this.material = material;
-        for (int i = 0; i<8; i++){
-            for (int j = 0; j<8; j++){
-                this.casilleros[i][j] = new Casillero();
-                Casillero casilleroActual = this.casilleros[i][j];
-                casilleroActual.setPosicion(Ajedrez.calcularPosicion(i,j));
+        for (int i = 0; i < 8; i++){
+            for (int j = 0; j < 8; j++){
+                Casillero nuevoCasillero = new Casillero();
+                nuevoCasillero.setPosicion(Ajedrez.calcularPosicion(i,j));
                 if ((i % 2) == (j % 2)) {
-                    casilleroActual.setColor("Negro");
+                    nuevoCasillero.setColor("Negro");
                 } else {
-                    casilleroActual.setColor("Blanco");
+                    nuevoCasillero.setColor("Blanco");
                 }
+                this.casilleros[i][j] = nuevoCasillero;
             }
         }
     }
