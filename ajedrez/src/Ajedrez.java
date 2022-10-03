@@ -1,9 +1,5 @@
 public class Ajedrez {
     
-    public static String calcularPosicion(int i, int j){
-        // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
-        return String.valueOf(i+1)+(char)(65+j);
-    }
     private static Pieza[] instanciarPiezas(String color, String material) {
         // Instancia todas las 16 piezas de un mismo color y material
         int i = 0;
@@ -24,29 +20,29 @@ public class Ajedrez {
         }
 
         for (i = 0; i < 8 ;i++){
-            piezas[i]= new Peon("Ladino", "Agresor",color, material, calcularPosicion(filaPeon,i));
+            piezas[i]= new Peon("Ladino", "Agresor",color, material, Tablero.calcularPosicion(filaPeon,i));
         }
 
         indice = i;
 
-        piezas[indice] = new Torre("Directa", "Homérica", color, material, calcularPosicion(filaOtros,0));
+        piezas[indice] = new Torre("Directa", "Homérica", color, material, Tablero.calcularPosicion(filaOtros,0));
         indice++;
-        piezas[indice] = new Torre("Directa", "Homérica", color, material, calcularPosicion(filaOtros,7));
-        indice++;
-
-        piezas[indice] = new Caballo("Ligero", "???", color, material, calcularPosicion(filaOtros,1));
-        indice++;
-        piezas[indice] = new Caballo("Ligero", "???", color, material, calcularPosicion(filaOtros,6));
+        piezas[indice] = new Torre("Directa", "Homérica", color, material, Tablero.calcularPosicion(filaOtros,7));
         indice++;
 
-        piezas[indice] = new Alfil("Oblicuo", "Sesgo", color, material, calcularPosicion(filaOtros,2));
+        piezas[indice] = new Caballo("Ligero", "???", color, material, Tablero.calcularPosicion(filaOtros,1));
         indice++;
-        piezas[indice] = new Alfil("Oblicuo", "Sesgo", color, material, calcularPosicion(filaOtros,5));
+        piezas[indice] = new Caballo("Ligero", "???", color, material, Tablero.calcularPosicion(filaOtros,6));
         indice++;
 
-        piezas[indice] = new Rey("Tenue", "Postrero", color, material, calcularPosicion(filaOtros,colRey));
+        piezas[indice] = new Alfil("Oblicuo", "Sesgo", color, material, Tablero.calcularPosicion(filaOtros,2));
         indice++;
-        piezas[indice] = new Reina("Armada", "Encarnizada", color, material, calcularPosicion(filaOtros,colReina));
+        piezas[indice] = new Alfil("Oblicuo", "Sesgo", color, material, Tablero.calcularPosicion(filaOtros,5));
+        indice++;
+
+        piezas[indice] = new Rey("Tenue", "Postrero", color, material, Tablero.calcularPosicion(filaOtros,colRey));
+        indice++;
+        piezas[indice] = new Reina("Armada", "Encarnizada", color, material, Tablero.calcularPosicion(filaOtros,colReina));
 
         return piezas;
     }
