@@ -1,5 +1,4 @@
 public class Pieza {
-    private String nombre;
     private String capDesplazamiento;
     private String conducta;
     private String color;
@@ -8,23 +7,6 @@ public class Pieza {
 
     public Pieza(){}
     public void Mover(){}
-
-    public Pieza(String nombre, String capDesplazamiento, String conducta, String color, String material, String posicion) {
-        this.nombre = nombre;
-        this.capDesplazamiento = capDesplazamiento;
-        this.conducta = conducta;
-        this.color = color;
-        this.material = material;
-        this.posicion = posicion;
-    }
-
-    public String getNombre(){
-        return this.nombre;
-    }
-
-    public void setNombre(String nombre){
-        this.nombre = nombre;
-    }
 
     public String getCapDesplazamiento(){
         return this.capDesplazamiento;
