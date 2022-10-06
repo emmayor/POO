@@ -1,5 +1,7 @@
-public abstract class Vehiculo {
+public class Vehiculo {
     private int cantDias;
+
+    public Vehiculo(){};
 
     public Vehiculo(int cantDias){
         this.setCantDias(cantDias);
@@ -14,12 +16,14 @@ public abstract class Vehiculo {
     }
 
     public double getPrecioAlquiler(){
-        return cantDias * 2000;
+        return cantDias * 2000f;
     }
 }
 
 abstract class Transporte extends Vehiculo {
     private int cantPlazas;
+
+    public Transporte(){};
 
     public Transporte(int cantDias, int cantPlazas){
         super(cantDias);
@@ -35,32 +39,37 @@ abstract class Transporte extends Vehiculo {
     }
 
     public double getPrecioAlquiler(){
-        return super.getPrecioAlquiler() + this.getCantPlazas() * this.getCantDias() * 100;   
+        return super.getPrecioAlquiler() + this.getCantPlazas() * this.getCantDias() * 100f;   
     }
 }
 
 abstract class Carga extends Vehiculo {
-    private int pesoMaximoAutorizado;
+    private double pesoMaximoAutorizado;
 
-    public Carga(int cantDias, int pesoMaximoAutorizado){
+    public Carga(){};
+
+    public Carga(int cantDias, double pesoMaximoAutorizado){
         super(cantDias);
         this.setPesoMaximoAutorizado(pesoMaximoAutorizado);
     }
 
-    public int getPesoMaximoAutorizado() {
+    public double getPesoMaximoAutorizado() {
         return pesoMaximoAutorizado;
     }
 
-    public void setPesoMaximoAutorizado(int pesoMaximoAutorizado) {
+    public void setPesoMaximoAutorizado(double pesoMaximoAutorizado) {
         this.pesoMaximoAutorizado = pesoMaximoAutorizado;
     }  
 
     public double getPrecioAlquiler(){
-        return super.getPrecioAlquiler() + this.getPesoMaximoAutorizado() * 800;
+        return super.getPrecioAlquiler() + this.getPesoMaximoAutorizado() * 800f;
     }
 }
 
 final class Auto extends Transporte {
+
+    public Auto(){};
+    
     public Auto(int cantDias, int cantPlazas){
         super(cantDias, cantPlazas);
     }
@@ -71,17 +80,23 @@ final class Auto extends Transporte {
 }
 
 final class Minibus extends Transporte {
+
+    public Minibus(){};
+
     public Minibus(int cantDias, int cantPlazas){
         super(cantDias, cantPlazas);
     }
 
     public double getPrecioAlquiler(){
-        return super.getPrecioAlquiler() + this.getCantPlazas() * 120;
+        return super.getPrecioAlquiler() + this.getCantPlazas() * 120f;
     }
 }
 
 final class Furgoneta extends Carga {
-    public Furgoneta(int cantDias, int pesoMaximoAutorizado){
+
+    public Furgoneta(){};
+
+    public Furgoneta(int cantDias, double pesoMaximoAutorizado){
         super(cantDias, pesoMaximoAutorizado);
     }
 
@@ -91,11 +106,14 @@ final class Furgoneta extends Carga {
 }
 
 final class Camion extends Carga {
+
+    public Camion(){};
+
     public Camion(int cantDias, int pesoMaximoAutorizado){
         super(cantDias, pesoMaximoAutorizado);
     }
 
     public double getPrecioAlquiler(){
-        return super.getPrecioAlquiler() + 1600;
+        return super.getPrecioAlquiler() + 1600f;
     }
 }
