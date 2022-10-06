@@ -6,7 +6,7 @@ public class Cotizador {
 
     private static double cotizarAlquiler(int tipoVehiculo) {
         int cantDias = 1;
-        Vehiculo vehiculo = new Auto(cantDias, 4);
+        Vehiculo vehiculo = new Auto();
         System.out.println("Ingrese la cantidad de días del alquiler:");
         cantDias = input.nextInt(); 
         switch(tipoVehiculo) {
@@ -20,7 +20,7 @@ public class Cotizador {
                 vehiculo = new Furgoneta(cantDias, 2.5f);
                 break;
             case 4:
-                vehiculo = new Camion(cantDias, 4);
+                vehiculo = new Camion(cantDias, 5);
                 break;
             }
         return vehiculo.getPrecioAlquiler();
@@ -30,10 +30,10 @@ public class Cotizador {
         int opcion = -1;
         while (opcion < 1 || opcion > 4) {
             System.out.println("Seleccione el tipo de vehículo");
-            System.out.println("1: Auto");
-            System.out.println("2: Minibus");
-            System.out.println("3: Furgoneta");
-            System.out.println("4: Camión");
+            System.out.println("1: Auto (4 plazas)");
+            System.out.println("2: Minibus (20 plazas)");
+            System.out.println("3: Furgoneta (2.5 Toneladas)");
+            System.out.println("4: Camión (5 Toneladas)");
             opcion = input.nextInt(); 
         }
         return opcion;
@@ -43,8 +43,9 @@ public class Cotizador {
         
     public static void main(String[] args){
         int opcion = -1;
+        System.out.println("Bienvenido al Cotizador de Vehículos!");
         while (opcion != 0) {
-            System.out.println("Bienvenido al Cotizador de Vehículos!");
+            System.out.println("MENU PRINCIPAL:");
             System.out.println("Seleccione una opción");
             System.out.println("1: Cotizar alquiler");
             System.out.println("0: Salir");

@@ -27,7 +27,7 @@ abstract class Transporte extends Vehiculo {
 
     public Transporte(int cantDias, int cantPlazas){
         super(cantDias);
-        this.setCantDias(cantDias);
+        this.setCantPlazas(cantPlazas);
     }
 
     public int getCantPlazas() {
@@ -73,10 +73,6 @@ final class Auto extends Transporte {
     public Auto(int cantDias, int cantPlazas){
         super(cantDias, cantPlazas);
     }
-
-    public double getPrecioAlquiler(){
-        return super.getPrecioAlquiler();
-    }
 }
 
 final class Minibus extends Transporte {
@@ -98,10 +94,6 @@ final class Furgoneta extends Carga {
 
     public Furgoneta(int cantDias, double pesoMaximoAutorizado){
         super(cantDias, pesoMaximoAutorizado);
-    }
-
-    public double getPrecioAlquiler(){
-        return super.getPrecioAlquiler();
     }
 }
 
