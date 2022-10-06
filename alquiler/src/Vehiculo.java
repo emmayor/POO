@@ -1,60 +1,101 @@
-public class Vehiculo {
-    private String patente;
-    public void setPatente(String patente_nueva) {
-        this.patente = patente_nueva;
+public abstract class Vehiculo {
+    private int cantDias;
+
+    public Vehiculo(int cantDias){
+        this.setCantDias(cantDias);
     }
-    public String getPatente(){
-        return this.patente;
+
+    public int getCantDias() {
+        return cantDias;
     }
-    public int precioAdicional(){
-        return 0;
+
+    public void setCantDias(int cantDias) {
+        this.cantDias = cantDias;
     }
-}
-class Transporte extends Vehiculo {
-    protected int cantPlazas;
-    public Transporte(){}
-    public Transporte(int plazas){
-        this.cantPlazas = plazas;
+
+    public double getPrecioAlquiler(){
+        return cantDias * 2000;
     }
 }
 
-class Carga extends Vehiculo {
-    protected int precioMaximoAutorizado;
-    public Carga(){}
-    public Carga(int pma){
-        this.precioMaximoAutorizado = pma;
+abstract class Transporte extends Vehiculo {
+    private int cantPlazas;
+
+    public Transporte(int cantDias, int cantPlazas){
+        super(cantDias);
+        this.setCantDias(cantDias);
+    }
+
+    public int getCantPlazas() {
+        return cantPlazas;
+    }
+
+    public void setCantPlazas(int cantPlazas) {
+        this.cantPlazas = cantPlazas;
+    }
+
+    public double getPrecioAlquiler(){
+        return super.getPrecioAlquiler() + this.getCantPlazas() * this.getCantDias() * 100;   
     }
 }
 
-class Auto extends Transporte {
-    private int diasAlquiler;
-    public Auto() {}
-    public Auto(int dias){
-        this.diasAlquiler = dias;
+abstract class Carga extends Vehiculo {
+    private int pesoMaximoAutorizado;
+
+    public Carga(int cantDias, int pesoMaximoAutorizado){
+        super(cantDias);
+        this.setPesoMaximoAutorizado(pesoMaximoAutorizado);
     }
-    public int precioAdicional() {
-        return diasAlquiler * this.cantPlazas * 100;
+
+    public int getPesoMaximoAutorizado() {
+        return pesoMaximoAutorizado;
+    }
+
+    public void setPesoMaximoAutorizado(int pesoMaximoAutorizado) {
+        this.pesoMaximoAutorizado = pesoMaximoAutorizado;
+    }  
+
+    public double getPrecioAlquiler(){
+        return super.getPrecioAlquiler() + this.getPesoMaximoAutorizado() * 800;
     }
 }
 
-class Minibus extends Transporte {
-    public Minibus(int plazas){
-        this.cantPlazas = plazas;
+final class Auto extends Transporte {
+    public Auto(int cantDias, int cantPlazas){
+        super(cantDias, cantPlazas);
     }
-    public int precioAdicional() {
-        return this.cantPlazas * 120;
+
+    public double getPrecioAlquiler(){
+        return super.getPrecioAlquiler();
     }
 }
 
-class Furgoneta extends Carga {
-    public int precioAdicional() {
-        return this.precioMaximoAutorizado * 800;
+final class Minibus extends Transporte {
+    public Minibus(int cantDias, int cantPlazas){
+        super(cantDias, cantPlazas);
+    }
+
+    public double getPrecioAlquiler(){
+        return super.getPrecioAlquiler() + this.getCantPlazas() * 120;
     }
 }
 
-class Camion extends Carga {
-    public int precioAdicional() {
-        return 1600 + this.precioMaximoAutorizado * 800;
+final class Furgoneta extends Carga {
+    public Furgoneta(int cantDias, int pesoMaximoAutorizado){
+        super(cantDias, pesoMaximoAutorizado);
+    }
+
+    public double getPrecioAlquiler(){
+        return super.getPrecioAlquiler();
     }
 }
 
+final class Camion extends Carga {
+    public Camion(int cantDias, int pesoMaximoAutorizado){
+        super(cantDias, pesoMaximoAutorizado);
+    }
+
+    public double getPrecioAlquiler(){
+        return super.getPrecioAlquiler() + 1600;
+    }
+}
