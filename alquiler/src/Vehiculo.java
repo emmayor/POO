@@ -20,7 +20,7 @@ public class Vehiculo {
     }
 }
 
-abstract class Transporte extends Vehiculo {
+class Transporte extends Vehiculo {
     private int cantPlazas;
 
     public Transporte(){};
@@ -43,7 +43,7 @@ abstract class Transporte extends Vehiculo {
     }
 }
 
-abstract class Carga extends Vehiculo {
+class Carga extends Vehiculo {
     private double pesoMaximoAutorizado;
 
     public Carga(){};
@@ -66,7 +66,7 @@ abstract class Carga extends Vehiculo {
     }
 }
 
-final class Auto extends Transporte {
+class Auto extends Transporte {
 
     public Auto(){};
     
@@ -79,7 +79,7 @@ final class Auto extends Transporte {
     }
 }
 
-final class Minibus extends Transporte {
+class Minibus extends Transporte {
 
     public Minibus(){};
 
@@ -92,7 +92,7 @@ final class Minibus extends Transporte {
     }
 }
 
-final class Furgoneta extends Carga {
+class Furgoneta extends Carga {
 
     public Furgoneta(){};
 
@@ -105,7 +105,7 @@ final class Furgoneta extends Carga {
     }
 }
 
-final class Camion extends Carga {
+class Camion extends Carga {
 
     public Camion(){};
 
