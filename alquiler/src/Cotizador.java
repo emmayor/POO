@@ -6,7 +6,7 @@ public class Cotizador {
 
     private static double cotizarAlquiler(int tipoVehiculo) {
         int cantDias = 1;
-        Vehiculo vehiculo = new Auto();
+        Vehiculo vehiculo;
         System.out.println("Ingrese la cantidad de días del alquiler:");
         cantDias = input.nextInt(); 
         switch(tipoVehiculo) {
