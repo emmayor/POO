@@ -6,23 +6,26 @@ public class Cotizador {
 
     private static double cotizarAlquiler(int tipoVehiculo) {
         int cantDias = 1;
-        Vehiculo vehiculo;
-        System.out.println("Ingrese la cantidad de días del alquiler:");
-        cantDias = input.nextInt(); 
-        switch(tipoVehiculo) {
-            case 1:
-                vehiculo = new Auto(cantDias, 4);
-                break;
-            case 2:
-                vehiculo = new Minibus(cantDias, 20);
-                break;
-            case 3:
-                vehiculo = new Furgoneta(cantDias, 2.5f);
-                break;
-            case 4:
-                vehiculo = new Camion(cantDias, 5);
-                break;
+        Vehiculo vehiculo = new Auto();
+        while(cantDias < 1) {
+            System.out.println("Ingrese la cantidad de días del alquiler:");
+            cantDias = input.nextInt(); 
+        }
+            switch(tipoVehiculo) {
+                case 1:
+                    vehiculo = new Auto(cantDias, 4);
+                    break;
+                case 2:
+                    vehiculo = new Minibus(cantDias, 20);
+                    break;
+                case 3:
+                    vehiculo = new Furgoneta(cantDias, 2.5f);
+                    break;
+                case 4:
+                    vehiculo = new Camion(cantDias, 5);
+                    break;
             }
+        
         return vehiculo.getPrecioAlquiler();
     }
 

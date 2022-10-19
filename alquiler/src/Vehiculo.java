@@ -66,7 +66,7 @@ abstract class Carga extends Vehiculo {
     }
 }
 
-final class Auto extends Transporte {
+class Auto extends Transporte {
 
     public Auto(){};
     
@@ -75,7 +75,7 @@ final class Auto extends Transporte {
     }
 }
 
-final class Minibus extends Transporte {
+class Minibus extends Transporte {
 
     public Minibus(){};
 
@@ -88,7 +88,7 @@ final class Minibus extends Transporte {
     }
 }
 
-final class Furgoneta extends Carga {
+class Furgoneta extends Carga {
 
     public Furgoneta(){};
 
@@ -97,11 +97,11 @@ final class Furgoneta extends Carga {
     }
 }
 
-final class Camion extends Carga {
+class Camion extends Carga {
 
     public Camion(){};
 
-    public Camion(int cantDias, int pesoMaximoAutorizado){
+    public Camion(int cantDias, double pesoMaximoAutorizado){
         super(cantDias, pesoMaximoAutorizado);
     }
 
