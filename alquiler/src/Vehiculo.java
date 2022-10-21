@@ -89,7 +89,6 @@ class Minibus extends Transporte {
 }
 
 class Furgoneta extends Carga {
-
     public Furgoneta(){};
 
     public Furgoneta(int cantDias, double pesoMaximoAutorizado){

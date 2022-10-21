@@ -5,8 +5,8 @@ public class Cotizador {
     private static Scanner input = new Scanner(System.in);
 
     private static double cotizarAlquiler(int tipoVehiculo) {
-        int cantDias = 1;
-        Vehiculo vehiculo = new Auto();
+        int cantDias = 0;
+        Vehiculo vehiculo = null;
         while(cantDias < 1) {
             System.out.println("Ingrese la cantidad de días del alquiler:");
             cantDias = input.nextInt(); 
@@ -41,9 +41,7 @@ public class Cotizador {
         }
         return opcion;
     }
-            
 
-        
     public static void main(String[] args){
         int opcion = -1;
         System.out.println("Bienvenido al Cotizador de Vehículos!");
