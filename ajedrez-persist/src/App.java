@@ -3,8 +3,6 @@ import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-// Comando: java -cp .:./bin/mariadb-java-client-3.0.8.jar App.java 
-
 public class App {
     public static void main(String[] args) throws Exception {
         mostrarPiezasBD();
@@ -33,11 +31,11 @@ public class App {
             rs  = sentencia.executeQuery(query);
            
             // Procesa el resultSet y muestra la informacion obtenida desde la BD
-            while(rs.next()){
+            while (rs.next()){
             	
-            		int idPieza = rs.getInt("idTipoPieza");
-            		System.out.println("Pieza Nro: " + String.valueOf(idPieza)
-            		+ " tipo " + rs.getString("Descripciondepieza")	);            	         		
+				int idPieza = rs.getInt("idTipoPieza");
+				System.out.println("Pieza Nro: " + String.valueOf(idPieza)
+				+ " tipo " + rs.getString("Descripciondepieza")	);            	         		
             	            			
 			}    
         } catch (SQLException error) {
