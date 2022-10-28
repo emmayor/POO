@@ -1,9 +1,22 @@
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.Dictionary;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+
 public class AjedrezPersist {
+
+
+    enum tipopiezas {
+        Reina,
+        Rey,
+        Torre,
+        Alfil,
+        Caballo,
+        Peon,
+    }
 
     public static String calcularPosicion(int i, int j){
         // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
@@ -57,20 +70,50 @@ public class AjedrezPersist {
         return piezas;
     }
 
+    public static ResultSet consulta(String query, Statement sentencia){
+        ResultSet rs = null;
+        try {
+            rs = sentencia.executeQuery(query);
+        } catch (SQLException error) {
+            System.err.println("ERROR: No se pudo hacer la consulta");
+        }
+        return rs;
+    }
+
+    public static String generarInsertPieza(Pieza pieza) {
+        String tipoPiezaString = pieza.getClass().getSimpleName();
+        tipopiezas tipo = tipopiezas.tipoPiezaString
+        String query = "INSERT INTO `pieza` (`idPieza`,`Descripcion`,`idColor`,`idTipoPieza`,`idMaterial`) VALUES (30,"+generarDescripcion(pieza)+","+pieza.getColor()+","+pieza.tipo()+",1,1);";
+        return query;
+    }
+
+    public static void insertarPiezas(Piezas[] piezas, Statement sentencia) {
+        for (int i = 0; i<16;i++){
+            ResultSet resultado = consulta(generarInsertPieza(piezas[i]), sentencia);
+        }
+    }
+
+    
+
     public static void main(String[] args) {
         try {
             AccesoDatos accesoBD = new AccesoDatos("localhost","admin","admin",3306,"ajedrez");
             Connection con = accesoBD.getConexion();
             Statement sentencia = con.createStatement();
+
+            // Busca los datos de las piezas
+            ResultSet resultado = consulta("SELECT * FROM piezas", sentencia);
+
+            // 
+
+
+        } catch (SQLException error) {
+            System.err.println("ERROR: No se pudieron conectar a la base de datos.");
         }
 
         Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
-        System.out.println("\nSe han instanciado las piezas blancas:");
-        imprimirLado(piezasBlancas);
-
         Pieza[] piezasNegras = instanciarPiezas("Negro", "Madera");
-        System.out.println("\nSe han instanciado las piezas negras:");
-        imprimirLado(piezasNegras);
+
 
         System.out.println("\nMovemos alguna piezas:");
         piezasNegras[4].Mover();
