@@ -4,19 +4,11 @@ import java.util.Dictionary;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
-
 public class AjedrezPersist {
 
-
-    enum tipopiezas {
-        Reina,
-        Rey,
-        Torre,
-        Alfil,
-        Caballo,
-        Peon,
-    }
+    enum tipoPiezas {None, Reina, Rey, Torre, Alfil, Caballo, Peon}
+    enum materiales {None, Plastico, Madera}
+    enum colores {None, Blanco, Negro}
 
     public static String calcularPosicion(int i, int j){
         // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
@@ -81,13 +73,23 @@ public class AjedrezPersist {
     }
 
     public static String generarInsertPieza(Pieza pieza) {
-        String tipoPiezaString = pieza.getClass().getSimpleName();
-        tipopiezas tipo = tipopiezas.tipoPiezaString
+        String tipo = pieza.getClass().getSimpleName();
+        String material = pieza.getMaterial();
+        String color = pieza.getColor();
+        String descripcion = tipo + " " + color + " " + pieza.getCapDesplazamiento();
+        if (tipo != "Caballo") {
+            descripcion = descripcion+" y "+pieza.getConducta()
+        }
+
+        int idTipoPieza = tipoPiezas.valueOf(tipo).ordinal(); // "Rey, "Peon", "Alfil"
+        int idMaterial = materiales.valueOf(material).ordinal(); // "Plástico", "Madera"
+        int idColor = colores.valueOf(color).ordinal(); // "Blanco", "Negro"
+        
         String query = "INSERT INTO `pieza` (`idPieza`,`Descripcion`,`idColor`,`idTipoPieza`,`idMaterial`) VALUES (30,"+generarDescripcion(pieza)+","+pieza.getColor()+","+pieza.tipo()+",1,1);";
         return query;
     }
 
-    public static void insertarPiezas(Piezas[] piezas, Statement sentencia) {
+    public static void insertarPiezas(Pieza[] piezas, Statement sentencia) {
         for (int i = 0; i<16;i++){
             ResultSet resultado = consulta(generarInsertPieza(piezas[i]), sentencia);
         }
@@ -106,19 +108,12 @@ public class AjedrezPersist {
 
             // 
 
-
         } catch (SQLException error) {
             System.err.println("ERROR: No se pudieron conectar a la base de datos.");
         }
 
         Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
         Pieza[] piezasNegras = instanciarPiezas("Negro", "Madera");
-
-
-        System.out.println("\nMovemos alguna piezas:");
-        piezasNegras[4].Mover();
-        piezasBlancas[12].Mover();
-        piezasNegras[15].Mover();
 
     }
 }
