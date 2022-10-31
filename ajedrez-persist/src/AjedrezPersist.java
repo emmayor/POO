@@ -35,8 +35,6 @@ public class AjedrezPersist {
         if (color == "Negro") {
             filaOtros = 7;
             filaPeon = 6;
-            colRey = 3;
-            colReina = 4;
         }
 
         for (i = 0; i < 8; i++) {
@@ -94,18 +92,19 @@ public class AjedrezPersist {
         String capDesplazamiento    = pieza.getCapDesplazamiento();
         String conducta             = pieza.getConducta();
         
+        int idTipoPieza = tipoPiezas.valueOf(tipo).ordinal(); 
+        int idMaterial  = materiales.valueOf(material).ordinal(); 
+        int idColor     = colores.valueOf(color).ordinal();
+        
         SimpleDateFormat formatter  = new SimpleDateFormat("YYYY-MM-d");  
         Date fechaCreacionRaw       = new Date();  
         String fechaCreacion        = (formatter.format(fechaCreacionRaw));  
 
-        String descripcion = tipo + " " + color + " de " + material + " " + pieza.getCapDesplazamiento();
+        String descripcion = tipo+" "+color+" de "+material+" "+pieza.getCapDesplazamiento();
         if (tipo != "Caballo") {
             descripcion = descripcion+" y "+pieza.getConducta();
         }
 
-        int idTipoPieza = tipoPiezas.valueOf(tipo).ordinal(); 
-        int idMaterial  = materiales.valueOf(material).ordinal(); 
-        int idColor     = colores.valueOf(color).ordinal();
 
         String queryAttributes = "INSERT INTO `pieza` (`Descripcion`,`idColor`,`idTipoPieza`,`idTamanio`,`idMaterial`,`Posicion`,`Capacidad_Desplazamiento`,`Conducta`,`Velocidad`,`Capacidad_Ataque`,`Fecha_Creacion`) ";
 
@@ -119,7 +118,7 @@ public class AjedrezPersist {
     }
 
     public static void imprimirPiezas(ResultSet tablaPiezas){
-        System.out.format("%-10s%-46s%-10s%-12s%-12s%-12s%-12s%-28s%-12s%-12s%-18s%-12s\n","idPieza","Descripcion","idColor","idTipoPieza","idTamanio","idMaterial","Posicion","Capacidad_Desplazamiento", "Conducta", "Velocidad", "Capacidad_Ataque","Fecha_Creacion");
+        System.out.format("%-10s%-45s%-10s%-12s%-12s%-12s%-12s%-18s%-12s%-12s%-12s%-12s\n","idPieza","Descripcion","idColor","idTipoPieza","idTamanio","idMaterial","posicion","capDesplazamiento", "Conducta", "velocidad", "capAtaque","fechaCreacion");
         SimpleDateFormat formatter  = new SimpleDateFormat("YYYY-MM-d");  
         try {
             while(tablaPiezas.next()){
@@ -142,7 +141,7 @@ public class AjedrezPersist {
                     fechaCreacion = (formatter.format(fechaCreacionRaw));  
                 }
                 
-                System.out.format("%-10d%-46s%-10d%-12d%-12d%-12d%-12s%-28s%-12s%-12s%-18s%-12s\n",idPieza,descripcion,idColor,idTipoPieza,idTamanio,idMaterial,posicion,capDesplazamiento,conducta,velocidad,capAtaque,fechaCreacion);       	         		     
+                System.out.format("%-10d%-45s%-10d%-12d%-12d%-12d%-12s%-18s%-12s%-12s%-12s%-12s\n",idPieza,descripcion,idColor,idTipoPieza,idTamanio,idMaterial,posicion,capDesplazamiento,conducta,velocidad,capAtaque,fechaCreacion);       	         		     
             }    
         } catch (SQLException error) {
             System.err.println("ERROR: No se pudo obtener la información");
@@ -152,7 +151,7 @@ public class AjedrezPersist {
     public static void main(String[] args) {
         AccesoDatos accesoBD = null;
         Connection con = null;
-        accesoBD = new AccesoDatos("192.168.1.65","admin","admin",3306,"ajedrez");
+        accesoBD = new AccesoDatos("localhost","admin","admin",3306,"ajedrez");
         con = accesoBD.getConexion();
         Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
         Pieza[] piezasNegras = instanciarPiezas("Negro", "Plastico");
