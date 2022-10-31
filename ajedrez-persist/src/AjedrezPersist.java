@@ -119,7 +119,7 @@ public class AjedrezPersist {
     }
 
     public static void imprimirPiezas(ResultSet tablaPiezas){
-        System.out.format("%-12s%-50s%-12s%-12s%-12s%-12s%-12s%-28s%-12s%-12s%-18s%-12s\n","idPieza","Descripcion","idColor","idTipoPieza","idTamanio","idMaterial","Posicion","Capacidad_Desplazamiento", "Conducta", "Velocidad", "Capacidad_Ataque","Fecha_Creacion");
+        System.out.format("%-10s%-46s%-10s%-12s%-12s%-12s%-12s%-28s%-12s%-12s%-18s%-12s\n","idPieza","Descripcion","idColor","idTipoPieza","idTamanio","idMaterial","Posicion","Capacidad_Desplazamiento", "Conducta", "Velocidad", "Capacidad_Ataque","Fecha_Creacion");
         SimpleDateFormat formatter  = new SimpleDateFormat("YYYY-MM-d");  
         try {
             while(tablaPiezas.next()){
@@ -142,7 +142,7 @@ public class AjedrezPersist {
                     fechaCreacion = (formatter.format(fechaCreacionRaw));  
                 }
                 
-                System.out.format("%-12d%-50s%-12d%-12d%-12d%-12d%-12s%-28s%-12s%-12s%-18s%-12s\n",idPieza,descripcion,idColor,idTipoPieza,idTamanio,idMaterial,posicion,capDesplazamiento,conducta,velocidad,capAtaque,fechaCreacion);       	         		     
+                System.out.format("%-10d%-46s%-10d%-12d%-12d%-12d%-12s%-28s%-12s%-12s%-18s%-12s\n",idPieza,descripcion,idColor,idTipoPieza,idTamanio,idMaterial,posicion,capDesplazamiento,conducta,velocidad,capAtaque,fechaCreacion);       	         		     
             }    
         } catch (SQLException error) {
             System.err.println("ERROR: No se pudo obtener la información");
@@ -153,7 +153,7 @@ public class AjedrezPersist {
         AccesoDatos accesoBD = null;
         Connection con = null;
 
-            accesoBD = new AccesoDatos("localhost","admin","admin",3306,"ajedrez");
+            accesoBD = new AccesoDatos("192.168.1.65","admin","admin",3306,"ajedrez");
             con = accesoBD.getConexion();
             Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
             Pieza[] piezasNegras = instanciarPiezas("Negro", "Plastico");
