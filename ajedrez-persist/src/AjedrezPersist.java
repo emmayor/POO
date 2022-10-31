@@ -1,14 +1,19 @@
 import java.sql.Connection;
 import java.sql.Statement;
-import java.util.Dictionary;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+
+import java.util.Scanner;
+import java.text.SimpleDateFormat;  
+import java.util.Date;  
 
 public class AjedrezPersist {
 
     enum tipoPiezas {None, Reina, Rey, Torre, Alfil, Caballo, Peon}
     enum materiales {None, Plastico, Madera}
     enum colores {None, Blanco, Negro}
+
+    private static Scanner scanner = new Scanner(System.in);
 
     public static String calcularPosicion(int i, int j){
         // Toma valores usados como indices de matrices y devuelve coordenadas de ajedrez
@@ -45,9 +50,9 @@ public class AjedrezPersist {
         piezas[indice] = new Torre("Directa", "Homérica", color, material, calcularPosicion(filaOtros, 7));
         indice++;
 
-        piezas[indice] = new Caballo("Ligero", "???", color, material, calcularPosicion(filaOtros, 1));
+        piezas[indice] = new Caballo("Ligero", null, color, material, calcularPosicion(filaOtros, 1));
         indice++;
-        piezas[indice] = new Caballo("Ligero", "???", color, material, calcularPosicion(filaOtros, 6));
+        piezas[indice] = new Caballo("Ligero", null, color, material, calcularPosicion(filaOtros, 6));
         indice++;
 
         piezas[indice] = new Alfil("Oblicuo", "Sesgo", color, material, calcularPosicion(filaOtros, 2));
@@ -62,58 +67,131 @@ public class AjedrezPersist {
         return piezas;
     }
 
-    public static ResultSet consulta(String query, Statement sentencia){
-        ResultSet rs = null;
+    public static ResultSet consulta(String query, Connection con){
+        ResultSet resultado = null;
+        Statement sentencia = null;
         try {
-            rs = sentencia.executeQuery(query);
+            sentencia = con.createStatement();
+            resultado = sentencia.executeQuery(query);
         } catch (SQLException error) {
             System.err.println("ERROR: No se pudo hacer la consulta");
+        } finally {
+            try {
+                if (resultado != null) resultado.close();
+                if (sentencia != null) sentencia.close();
+            } catch (SQLException error){
+                System.err.println("ERROR: Fallo al cerrar el resultado de la consulta");
+            }
         }
-        return rs;
+        return resultado;
     }
 
     public static String generarInsertPieza(Pieza pieza) {
-        String tipo = pieza.getClass().getSimpleName();
-        String material = pieza.getMaterial();
-        String color = pieza.getColor();
-        String descripcion = tipo + " " + color + " " + pieza.getCapDesplazamiento();
-        if (tipo != "Caballo") {
-            descripcion = descripcion+" y "+pieza.getConducta()
-        }
-
-        int idTipoPieza = tipoPiezas.valueOf(tipo).ordinal(); // "Rey, "Peon", "Alfil"
-        int idMaterial = materiales.valueOf(material).ordinal(); // "Plástico", "Madera"
-        int idColor = colores.valueOf(color).ordinal(); // "Blanco", "Negro"
+        String tipo                 = pieza.getClass().getSimpleName();
+        String material             = pieza.getMaterial();
+        String color                = pieza.getColor();
+        String posicion             = pieza.getPosicion();
+        String capDesplazamiento    = pieza.getCapDesplazamiento();
+        String conducta             = pieza.getConducta();
         
-        String query = "INSERT INTO `pieza` (`idPieza`,`Descripcion`,`idColor`,`idTipoPieza`,`idMaterial`) VALUES (30,"+generarDescripcion(pieza)+","+pieza.getColor()+","+pieza.tipo()+",1,1);";
-        return query;
+        SimpleDateFormat formatter  = new SimpleDateFormat("YYYY-MM-d");  
+        Date fechaCreacionRaw       = new Date();  
+        String fechaCreacion        = (formatter.format(fechaCreacionRaw));  
+
+        String descripcion = tipo + " " + color + " de " + material + " " + pieza.getCapDesplazamiento();
+        if (tipo != "Caballo") {
+            descripcion = descripcion+" y "+pieza.getConducta();
+        }
+
+        int idTipoPieza = tipoPiezas.valueOf(tipo).ordinal(); 
+        int idMaterial  = materiales.valueOf(material).ordinal(); 
+        int idColor     = colores.valueOf(color).ordinal();
+
+        String queryAttributes = "INSERT INTO `pieza` (`Descripcion`,`idColor`,`idTipoPieza`,`idTamanio`,`idMaterial`,`Posicion`,`Capacidad_Desplazamiento`,`Conducta`,`Velocidad`,`Capacidad_Ataque`,`Fecha_Creacion`) ";
+
+        String queryValues = "VALUES ('"+descripcion+"',"+idColor+","+idTipoPieza+",1,"+idMaterial+",'"+posicion+"','"+capDesplazamiento+"','"+conducta+"',NULL,NULL,'"+fechaCreacion+"');";
+        return queryAttributes+queryValues;
     }
 
-    public static void insertarPiezas(Pieza[] piezas, Statement sentencia) {
-        for (int i = 0; i<16;i++){
-            ResultSet resultado = consulta(generarInsertPieza(piezas[i]), sentencia);
+    public static void insertarPieza(Pieza pieza, Connection con) {
+        String queryStatement = generarInsertPieza(pieza);
+        consulta(queryStatement, con);
+    }
+
+    public static void imprimirPiezas(ResultSet tablaPiezas){
+        System.out.format("%-12s%-50s%-12s%-12s%-12s%-12s%-12s%-28s%-12s%-12s%-18s%-12s\n","idPieza","Descripcion","idColor","idTipoPieza","idTamanio","idMaterial","Posicion","Capacidad_Desplazamiento", "Conducta", "Velocidad", "Capacidad_Ataque","Fecha_Creacion");
+        SimpleDateFormat formatter  = new SimpleDateFormat("YYYY-MM-d");  
+        try {
+            while(tablaPiezas.next()){
+                int idPieza     = tablaPiezas.getInt("idPieza");
+                int idColor     = tablaPiezas.getInt("idColor");
+                int idTipoPieza = tablaPiezas.getInt("idTipoPieza");
+                int idTamanio   = tablaPiezas.getInt("idTamanio");
+                int idMaterial  = tablaPiezas.getInt("idMaterial");
+                
+                String descripcion       = tablaPiezas.getString("Descripcion");
+                String posicion          = tablaPiezas.getString("Posicion");
+                String capDesplazamiento = tablaPiezas.getString("Capacidad_Desplazamiento");
+                String conducta          = tablaPiezas.getString("Conducta");
+                String velocidad         = tablaPiezas.getString("Velocidad");
+                String capAtaque         = tablaPiezas.getString("Capacidad_Ataque");
+                
+                Date fechaCreacionRaw       = tablaPiezas.getDate("Fecha_Creacion");
+                String fechaCreacion = null;  
+                if (fechaCreacionRaw != null){
+                    fechaCreacion = (formatter.format(fechaCreacionRaw));  
+                }
+                
+                System.out.format("%-12d%-50s%-12d%-12d%-12d%-12d%-12s%-28s%-12s%-12s%-18s%-12s\n",idPieza,descripcion,idColor,idTipoPieza,idTamanio,idMaterial,posicion,capDesplazamiento,conducta,velocidad,capAtaque,fechaCreacion);       	         		     
+            }    
+        } catch (SQLException error) {
+            System.err.println("ERROR: No se pudo obtener la información");
         }
     }
-
-    
 
     public static void main(String[] args) {
-        try {
-            AccesoDatos accesoBD = new AccesoDatos("localhost","admin","admin",3306,"ajedrez");
-            Connection con = accesoBD.getConexion();
-            Statement sentencia = con.createStatement();
+        AccesoDatos accesoBD = null;
+        Connection con = null;
 
-            // Busca los datos de las piezas
-            ResultSet resultado = consulta("SELECT * FROM piezas", sentencia);
-
-            // 
-
-        } catch (SQLException error) {
-            System.err.println("ERROR: No se pudieron conectar a la base de datos.");
+            accesoBD = new AccesoDatos("localhost","admin","admin",3306,"ajedrez");
+            con = accesoBD.getConexion();
+            Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
+            Pieza[] piezasNegras = instanciarPiezas("Negro", "Plastico");
+            int input = -1;
+            while (input != 0){
+                System.out.println("MENU PRINCIPAL:");
+                System.out.println("Seleccione una opción");
+                System.out.println("1: Añadir piezas a la base de datos");
+                System.out.println("2: Listar piezas de la base de datos");
+                System.out.println("3: Quitar piezas de la base de datos");
+                System.out.println("0: Salir");
+                input = scanner.nextInt(); 
+                switch(input){
+                    case 1:
+                        int i;
+                        for (i = 0; i < 16; i++){
+                            insertarPieza(piezasBlancas[i], con);
+                        }
+                        for (i = 0; i < 16; i++){
+                            insertarPieza(piezasNegras[i], con);
+                        }
+                        System.out.println("Las piezas fueron agregadas a la base de datos!");
+                        break;
+                    case 2:
+                        ResultSet tablaPiezas = consulta("SELECT * FROM pieza", con);
+                        imprimirPiezas(tablaPiezas);
+                        break;
+                    case 3: 
+                        consulta("TRUNCATE TABLE pieza", con);
+                }
+            }
+   
+            try {
+                if (con != null){
+                    con.close();
+                }
+            } catch (SQLException error) {
+                System.out.println("ERROR: No se pudo cerrar la conexión");
+            }
         }
-
-        Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
-        Pieza[] piezasNegras = instanciarPiezas("Negro", "Madera");
-
     }
-}

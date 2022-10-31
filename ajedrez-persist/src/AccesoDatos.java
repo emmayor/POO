@@ -10,7 +10,7 @@ public class AccesoDatos {
 	private int 		puerto;   
 	private String 	   	bd;
 	private String     	servidor; 
-	private Connection 	conexion;
+	private Connection 	con;
 
 	private String getHost() {
 		return host;
@@ -61,22 +61,22 @@ public class AccesoDatos {
 	}
 
 	public Connection getConexion() {
-		return conexion;
+		return con;
 	}
 
 	public void setConexion(Connection conexion) {
-		this.conexion = conexion;
+		this.con = conexion;
 	}
 
 	private void conectarBd(){
 		this.setServidor("jdbc:mariadb://"+this.getHost()+":"+this.getPuerto()+"/"+this.getBd());
 		try {
-	        conexion = DriverManager.getConnection(this.getServidor()+"?user="+this.getUsuario()+"&password="+this.getClave());
+	        con = DriverManager.getConnection(this.getServidor()+"?user="+this.getUsuario()+"&password="+this.getClave());
 	    } catch (SQLException error) {
 			System.err.println("ERROR: No se pudo realizar la conexión.");
 			error.printStackTrace();
 			System.exit(0);
-	    }
+	    } 
 	    System.out.println("Conectado a "+this.getBd());
 	}
 
