@@ -152,46 +152,44 @@ public class AjedrezPersist {
     public static void main(String[] args) {
         AccesoDatos accesoBD = null;
         Connection con = null;
-
-            accesoBD = new AccesoDatos("192.168.1.65","admin","admin",3306,"ajedrez");
-            con = accesoBD.getConexion();
-            Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
-            Pieza[] piezasNegras = instanciarPiezas("Negro", "Plastico");
-            int input = -1;
-            while (input != 0){
-                System.out.println("MENU PRINCIPAL:");
-                System.out.println("Seleccione una opción");
-                System.out.println("1: Añadir piezas a la base de datos");
-                System.out.println("2: Listar piezas de la base de datos");
-                System.out.println("3: Quitar piezas de la base de datos");
-                System.out.println("0: Salir");
-                input = scanner.nextInt(); 
-                switch(input){
-                    case 1:
-                        int i;
-                        for (i = 0; i < 16; i++){
-                            insertarPieza(piezasBlancas[i], con);
-                        }
-                        for (i = 0; i < 16; i++){
-                            insertarPieza(piezasNegras[i], con);
-                        }
-                        System.out.println("Las piezas fueron agregadas a la base de datos!");
-                        break;
-                    case 2:
-                        ResultSet tablaPiezas = consulta("SELECT * FROM pieza", con);
-                        imprimirPiezas(tablaPiezas);
-                        break;
-                    case 3: 
-                        consulta("TRUNCATE TABLE pieza", con);
-                }
+        accesoBD = new AccesoDatos("192.168.1.65","admin","admin",3306,"ajedrez");
+        con = accesoBD.getConexion();
+        Pieza[] piezasBlancas = instanciarPiezas("Blanco", "Madera");
+        Pieza[] piezasNegras = instanciarPiezas("Negro", "Plastico");
+        int input = -1;
+        while (input != 0){
+            System.out.println("MENU PRINCIPAL:");
+            System.out.println("Seleccione una opción");
+            System.out.println("1: Añadir piezas a la base de datos");
+            System.out.println("2: Listar piezas de la base de datos");
+            System.out.println("3: Quitar piezas de la base de datos");
+            System.out.println("0: Salir");
+            input = scanner.nextInt(); 
+            switch(input){
+                case 1:
+                    int i;
+                    for (i = 0; i < 16; i++){
+                        insertarPieza(piezasBlancas[i], con);
+                    }
+                    for (i = 0; i < 16; i++){
+                        insertarPieza(piezasNegras[i], con);
+                    }
+                    System.out.println("Las piezas fueron agregadas a la base de datos!");
+                    break;
+                case 2:
+                    ResultSet tablaPiezas = consulta("SELECT * FROM pieza", con);
+                    imprimirPiezas(tablaPiezas);
+                    break;
+                case 3: 
+                    consulta("TRUNCATE TABLE pieza", con);
             }
-   
-            try {
-                if (con != null){
-                    con.close();
-                }
-            } catch (SQLException error) {
-                System.out.println("ERROR: No se pudo cerrar la conexión");
+        }
+        try {
+            if (con != null){
+                con.close();
             }
+        } catch (SQLException error) {
+            System.out.println("ERROR: No se pudo cerrar la conexión");
+        }
         }
     }
