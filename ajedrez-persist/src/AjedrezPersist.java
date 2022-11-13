@@ -65,7 +65,7 @@ public class AjedrezPersist {
         return piezas;
     }
 
-    public static ResultSet consulta(String query, Connection con){
+    public static ResultSet query(String query, Connection con){
         ResultSet resultado = null;
         Statement sentencia = null;
         try {
@@ -114,7 +114,7 @@ public class AjedrezPersist {
 
     public static void insertarPieza(Pieza pieza, Connection con) {
         String queryStatement = generarInsertPieza(pieza);
-        consulta(queryStatement, con);
+        query(queryStatement, con);
     }
 
     public static void imprimirPiezas(ResultSet tablaPiezas){
@@ -176,11 +176,11 @@ public class AjedrezPersist {
                     System.out.println("Las piezas fueron agregadas a la base de datos!");
                     break;
                 case 2:
-                    ResultSet tablaPiezas = consulta("SELECT * FROM pieza", con);
+                    ResultSet tablaPiezas = query("SELECT * FROM pieza", con);
                     imprimirPiezas(tablaPiezas);
                     break;
                 case 3: 
-                    consulta("TRUNCATE TABLE pieza", con);
+                    query("TRUNCATE TABLE pieza", con);
             }
         }
         try {
