@@ -47,8 +47,8 @@ public class InterfazCotizaciones extends JFrame implements ActionListener, Mous
 
     public InterfazCotizaciones(ResultSet cotizaciones) {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 800, 412);
 		contentPane = new JPanel();
+		setBounds(100, 100, 800, 412);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.setLayout(null);		
 		setContentPane(contentPane);
@@ -68,10 +68,11 @@ public class InterfazCotizaciones extends JFrame implements ActionListener, Mous
 		};
 		
 		scrollPane = new JScrollPane();
+		table = new JTable();
+
 		scrollPane.setBounds(10, 11, 640, 282);
 		contentPane.add(scrollPane);
 		
-		table = new JTable();
 		scrollPane.setViewportView(table);
 		table.setShowVerticalLines(false);
 		table.setFocusable(true);
