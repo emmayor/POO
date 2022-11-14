@@ -140,7 +140,12 @@ public class CotizadorGrafico {
             error.printStackTrace();
         }
         table.updateUI();  
-}
+    }
+
+    private void vaciarTabla() {
+        controller.truncateCotizacion();
+        actualizarTabla();
+    }
 
     private void inicializarBotones() {
         JButton btnAgregarCotizacion = new JButton("Agregar cotización");
@@ -155,6 +160,7 @@ public class CotizadorGrafico {
 				}			
 		});
 
+        
         JButton btnSalir = new JButton("Salir");
 		btnSalir.setBounds(367, 318, 89, 23);
 		btnSalir.addActionListener(new ActionListener() {
@@ -166,8 +172,22 @@ public class CotizadorGrafico {
             }			
 		});
 		
+        JButton btnVaciarTabla = new JButton("Vaciar Tabla");
+        btnVaciarTabla.setBounds(467, 318, 189, 23);
+        contentPane.add(btnVaciarTabla);		
+        btnVaciarTabla.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent elevento ) {
+                // Implementa el evento para el boton Salir
+                if (elevento.getSource() == btnVaciarTabla) vaciarTabla();
+                
+                }			
+        });
+
         contentPane.add(btnAgregarCotizacion);
         contentPane.add(btnSalir);
+        contentPane.add(btnVaciarTabla);
+    
     }
 
     private void cerrarPrograma() {
