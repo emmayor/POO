@@ -7,7 +7,22 @@ import java.sql.SQLException;
 public class ControllerCotizaciones {
     enum tipoVehiculo {None, Auto, Minibus, Camion, Furgoneta}
 
-    private Connection con = null;
+    private Connection con;
+
+    public Connection getConnection() {
+        return con;
+    }
+
+    public void closeConnection() {
+        try {
+            if (con != null) { 
+                con.close();
+            }
+        } catch (SQLException error) {
+            System.out.println("ERROR: No se pudo cerrar la conexión.");
+            error.printStackTrace();
+        }
+    }
 
     private void insertCotizacion(Vehiculo vehiculo) {
         // COLUMNAS: idTipoVehiculo, cantidadDias, precioCotizacion Fecha_Creacion
@@ -34,25 +49,22 @@ public class ControllerCotizaciones {
 
     private Vehiculo instanciarVehiculo(int tipoVehiculo, int cantDias) {
         Vehiculo vehiculo = null;
-        while(cantDias < 1) {
+        switch(tipoVehiculo) {
+            case 0:
+                vehiculo = new Auto(cantDias, 4);
+                break;
+            case 1:
+                vehiculo = new Minibus(cantDias, 20);
+                break;
+            case 2:
+                vehiculo = new Furgoneta(cantDias, 2.5f);
+                break;
+            case 3:
+                vehiculo = new Camion(cantDias, 5);
+                break;
         }
-            switch(tipoVehiculo) {
-                case 1:
-                    vehiculo = new Auto(cantDias, 4);
-                    break;
-                case 2:
-                    vehiculo = new Minibus(cantDias, 20);
-                    break;
-                case 3:
-                    vehiculo = new Furgoneta(cantDias, 2.5f);
-                    break;
-                case 4:
-                    vehiculo = new Camion(cantDias, 5);
-                    break;
-            }
         return vehiculo;
     }
-
 
     public ResultSet fetchCotizaciones() {
         ResultSet rs = null;
@@ -78,10 +90,9 @@ public class ControllerCotizaciones {
     }
 
     public void agregarCotizacion(int tipoVehiculo, int cantDias){
-        Vehiculo vehicle = instanciarVehiculo(tipoVehiculo,tipoVehiculo);
+        Vehiculo vehicle = instanciarVehiculo(tipoVehiculo,cantDias);
         insertCotizacion(vehicle);
     }
-
 
     public ControllerCotizaciones(Connection con) {
         this.con = con;
