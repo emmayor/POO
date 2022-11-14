@@ -22,7 +22,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
 
 
-public class ListadoDePiezas extends JFrame implements ActionListener, MouseListener, ItemListener{
+public class ListadoDePiezas extends JFrame implements ActionListener, MouseListener, ItemListener {
 
 	private JPanel contentPane;
 	private JTable table;

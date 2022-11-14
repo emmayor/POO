@@ -9,7 +9,7 @@ public class ControllerCotizaciones {
 
     private Connection con = null;
 
-    public void insertCotizacion(Vehiculo vehiculo) {
+    private void insertCotizacion(Vehiculo vehiculo) {
         // COLUMNAS: idTipoVehiculo, cantidadDias, precioCotizacion Fecha_Creacion
         String insert = "INSERT INTO `cotizacion` (`idTipoVehiculo`, `cantidadDias`, `precioCotizacion`, `Fecha_Creacion`) VALUES (?,?,?,?);";
         int idTipoVehiculo = tipoVehiculo.valueOf(vehiculo.getClass().getSimpleName()).ordinal();
@@ -31,6 +31,28 @@ public class ControllerCotizaciones {
             error.printStackTrace();
         }
     }
+
+    private Vehiculo instanciarVehiculo(int tipoVehiculo, int cantDias) {
+        Vehiculo vehiculo = null;
+        while(cantDias < 1) {
+        }
+            switch(tipoVehiculo) {
+                case 1:
+                    vehiculo = new Auto(cantDias, 4);
+                    break;
+                case 2:
+                    vehiculo = new Minibus(cantDias, 20);
+                    break;
+                case 3:
+                    vehiculo = new Furgoneta(cantDias, 2.5f);
+                    break;
+                case 4:
+                    vehiculo = new Camion(cantDias, 5);
+                    break;
+            }
+        return vehiculo;
+    }
+
 
     public ResultSet fetchCotizaciones() {
         ResultSet rs = null;
@@ -55,27 +77,11 @@ public class ControllerCotizaciones {
         }
     }
 
-    public Vehiculo cotizarAlquiler(int tipoVehiculo) {
-        int cantDias = 0;
-        Vehiculo vehiculo = null;
-        while(cantDias < 1) {
-        }
-            switch(tipoVehiculo) {
-                case 1:
-                    vehiculo = new Auto(cantDias, 4);
-                    break;
-                case 2:
-                    vehiculo = new Minibus(cantDias, 20);
-                    break;
-                case 3:
-                    vehiculo = new Furgoneta(cantDias, 2.5f);
-                    break;
-                case 4:
-                    vehiculo = new Camion(cantDias, 5);
-                    break;
-            }
-        return vehiculo;
+    public void agregarCotizacion(int tipoVehiculo, int cantDias){
+        Vehiculo vehicle = instanciarVehiculo(tipoVehiculo,tipoVehiculo);
+        insertCotizacion(vehicle);
     }
+
 
     public ControllerCotizaciones(Connection con) {
         this.con = con;
