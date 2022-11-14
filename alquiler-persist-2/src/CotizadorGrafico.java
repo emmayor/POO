@@ -5,8 +5,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JComboBox;
+import javax.swing.JDialog;
 import javax.swing.BoxLayout;
-
 import javax.swing.JTable;
 import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
@@ -27,6 +27,44 @@ public class CotizadorGrafico {
 	private JScrollPane scrollPane;
     private ControllerCotizaciones controller;
     private DefaultTableModel modelo;
+
+    private void ventanaConfirmacionVaciar(JFrame owner) {
+        JDialog dialog = new JDialog(owner,"Advertencia");
+        dialog.setLayout(null);
+        
+        JLabel tituloAdvertencia = new JLabel("<html>¿Está seguro que desea eliminar TODOS los datos de la tabla? Este cambio no se puede deshacer</html>");
+        JButton btnSi = new JButton("SI");
+        JButton btnNo = new JButton("NO");
+
+        tituloAdvertencia.setBounds(10, 0, 400, 100);
+        btnSi.setBounds(10, 100, 60, 20);
+        btnNo.setBounds(100, 100, 60, 20);
+
+        btnSi.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent elevento ) {
+				// Implementa el evento para el boton Salir
+				if (elevento.getSource() == btnSi) 
+                    vaciarTabla();
+                    dialog.setVisible(false);
+				}			
+		});
+
+        btnNo.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent elevento ) {
+				// Implementa el evento para el boton Salir
+				if (elevento.getSource() == btnNo) dialog.setVisible(false);
+
+				}			
+		});
+
+        dialog.add(tituloAdvertencia);
+        dialog.add(btnSi);
+        dialog.add(btnNo);
+        dialog.setBounds(500, 200, 500, 250);
+        dialog.setVisible(true);
+    }
 
     private void ventanaAgregarCotizacion() {
         JFrame localFrame = new JFrame("Agregar Cotizacion");
@@ -57,7 +95,6 @@ public class CotizadorGrafico {
         btnAgregar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent elevento ) {
-				// Implementa el evento para el boton Salir
 				if (elevento.getSource() == btnAgregar) {
                     int vehiculoElegido = vehicleDropDown.getSelectedIndex();
                     int cantDias = Integer.parseInt(campoDias.getText());
@@ -85,6 +122,7 @@ public class CotizadorGrafico {
         contentPane.setLayout(null);	
         frame.setBounds(100, 100, 800, 600);
         frame.setContentPane(contentPane);
+        frame.setResizable(false);
         frame.setVisible(true);
         frame.addWindowListener(new java.awt.event.WindowAdapter() {
             public void windowClosing(java.awt.event.WindowEvent e) {
@@ -104,9 +142,8 @@ public class CotizadorGrafico {
 		{
 			public boolean isCellEditable(int row, int column)
 		    {
-		      return true;//Esta sentencia hace que todas las celdas no permitan edicion
-		    }
-		};
+		      return false;
+		}};
     }
 
     private void inicializarTabla() {
@@ -148,46 +185,42 @@ public class CotizadorGrafico {
     }
 
     private void inicializarBotones() {
+        // AGREGAR COTIZACION
         JButton btnAgregarCotizacion = new JButton("Agregar cotización");
-		btnAgregarCotizacion.setBounds(167, 318, 189, 23);
+		btnAgregarCotizacion.setBounds(10, 318, 169, 23);
 		contentPane.add(btnAgregarCotizacion);		
 		btnAgregarCotizacion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent elevento ) {
-				// Implementa el evento para el boton Salir
 				if (elevento.getSource() == btnAgregarCotizacion) ventanaAgregarCotizacion();
-				
-				}			
+			}			
 		});
 
-        
-        JButton btnSalir = new JButton("Salir");
-		btnSalir.setBounds(367, 318, 89, 23);
-		btnSalir.addActionListener(new ActionListener() {
-            @Override
-			public void actionPerformed(ActionEvent elevento ) {
-                // Implementa el evento para el boton Salir
-				if (elevento.getSource() == btnSalir) cerrarPrograma();
-				
-            }			
-		});
 		
+        //VACIAR TABLA
         JButton btnVaciarTabla = new JButton("Vaciar Tabla");
-        btnVaciarTabla.setBounds(467, 318, 189, 23);
+        btnVaciarTabla.setBounds(200, 318, 150, 23);
         contentPane.add(btnVaciarTabla);		
         btnVaciarTabla.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent elevento ) {
-                // Implementa el evento para el boton Salir
-                if (elevento.getSource() == btnVaciarTabla) vaciarTabla();
-                
-                }			
+                if (elevento.getSource() == btnVaciarTabla) ventanaConfirmacionVaciar(frame);
+            }			
         });
 
+        //SALIR
+        JButton btnSalir = new JButton("Salir");
+        btnSalir.setBounds(550, 318, 89, 23);
+        btnSalir.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent elevento ) {
+                if (elevento.getSource() == btnSalir) cerrarPrograma();
+            }			
+        });
+        
         contentPane.add(btnAgregarCotizacion);
-        contentPane.add(btnSalir);
         contentPane.add(btnVaciarTabla);
-    
+        contentPane.add(btnSalir);
     }
 
     private void cerrarPrograma() {
@@ -196,7 +229,7 @@ public class CotizadorGrafico {
         System.exit(0);
     }
 
-    public void iniciarBucle() {
+    public void inicializar() {
         inicializarVentana();
         inicializarModelo();
         inicializarTabla();

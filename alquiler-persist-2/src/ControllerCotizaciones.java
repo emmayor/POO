@@ -3,7 +3,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-
 public class ControllerCotizaciones {
     enum tipoVehiculo {None, Auto, Minibus, Camion, Furgoneta}
 
