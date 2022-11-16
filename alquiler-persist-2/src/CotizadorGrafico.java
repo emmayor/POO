@@ -77,6 +77,8 @@ public class CotizadorGrafico {
         tituloMenuVehiculo.setAlignmentX(Component.CENTER_ALIGNMENT);
         localFrame.setBounds(500, 300, 320, 240);
         localFrame.setContentPane(localContentPane);
+        localFrame.setResizable(false);
+
         localContentPane.setLayout(new BoxLayout(localContentPane, BoxLayout.Y_AXIS)); 	
         
         String[] opcionesMenuVehiculo = {"Auto", "Minibus", "Furgoneta", "Camión"};

@@ -68,7 +68,7 @@ public class ControllerCotizaciones {
     public ResultSet fetchCotizaciones() {
         ResultSet rs = null;
         try {
-            String select = "SELECT idCotizacion, V.tipoVehiculo, cantidadDias, precioCotizacion, Fecha_Creacion FROM cotizacion AS CT INNER JOIN vehiculo AS V ON V.idVehiculo = CT.idTipoVehiculo;";
+            String select = "SELECT idCotizacion, V.tipoVehiculo, cantidadDias, precioCotizacion, Fecha_Creacion FROM cotizacion AS CT INNER JOIN vehiculo AS V ON V.idVehiculo = CT.idTipoVehiculo ORDER BY idCotizacion ASC;";
             PreparedStatement statement = con.prepareStatement(select);
             rs = statement.executeQuery();
         } catch (SQLException error) {
